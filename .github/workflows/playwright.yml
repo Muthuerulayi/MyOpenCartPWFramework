@@ -35,13 +35,13 @@ jobs:
 
     # 4. Run your test suite
     - name: Run playwright tests
-      #run: npx playwright test -grep "@master"
-      run: npm run test:master
+      #run: npx playwright test -grep "@sanity"
+      run: npm run test:mytest
 
-    - name: Upload Playwright HTML Report
+    - name: Upload Playwright Allure Report
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: playwright-report
-        path: playwright-report/
+        name: allure-report
+        path: allure-report/
         retention-days: 30
