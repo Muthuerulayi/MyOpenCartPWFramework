@@ -3,9 +3,9 @@ name: Playwright Tests
 # Triggers: when the workflow should run
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main, master ]
 
 # Jobs: the actual tasks to perform
 jobs:
@@ -24,14 +24,18 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: lts/*
-        #cache: 'npm'
 
     # 3. Install dependencies
     - name: Install dependencies
       run: npm ci
 
+    # 4. Install browsers
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
     # 4. Run your test suite
     - name: Run playwright tests
+      #run: npx playwright test -grep "@master"
       run: npm run test:master
 
     - name: Upload Playwright HTML Report
