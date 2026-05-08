@@ -1,0 +1,43 @@
+name: Playwright Tests
+
+# Triggers: when the workflow should run
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Jobs: the actual tasks to perform
+jobs:
+  test:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+    # 1. Check out your repository's code
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    # 2. Set up the specific Node.js version
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        #cache: 'npm'
+
+    # 3. Install dependencies
+    - name: Install dependencies
+      run: npm ci
+
+    # 4. Run your test suite
+    - name: Run playwright tests
+      run: npm run test:master
+
+    - name: Upload Playwright HTML Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
