@@ -10,7 +10,7 @@
     "test:end-to-end": "playwright test --grep @end-to-end --headed",
     "clean": "powershell -Command \"Remove-Item -Recurse -Force allure-results, allure-report -ErrorAction SilentlyContinue\"",
     "test": "playwright test --grep @end-to-end",
-    "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+    "report": "npx allure generate allure-results --clean -o allure-report && allure open allure-report",
     "test:report": "npm run clean && npm test && npm run report",
     "test:mytest": "npm run clean && npm run test:sanity && npm run report"
   },
